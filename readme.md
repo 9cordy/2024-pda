@@ -1,4 +1,4 @@
-# 2024 Physical Design Automation (PDA) Core Algorithms
+# 2024 Physical Design Automation Core Algorithms
 
 This repository contains four major projects developed during the "Physical Design Automation (PDA)" course in 2024. These projects cover the critical stages of the VLSI Physical Design flow, implemented entirely in C++ with a strong emphasis on performance optimization, advanced data structures, and algorithmic efficiency.
 
