@@ -1,4 +1,4 @@
-# Fixed-Outline Floorplanning - Physical Design Automation Lab 2
+# Fixed-Outline Floorplanning
 
 ## Introduction
 This project implements a fixed-outline floorplanner designed to place a set of rectangular hard macros within a specified chip boundary without any overlaps. The primary goal is to optimize a weighted cost function of the total chip area and the total wirelength (HPWL).

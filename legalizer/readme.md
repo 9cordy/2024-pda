@@ -1,4 +1,4 @@
-# Multi-Row Height Standard Cell Legalization - Physical Design Automation Lab 3
+# Multi-Row Height Standard Cell Legalization
 
 ## Introduction
 This project implements a **Legalizer** for standard cell design, specifically handling **multi-row height** cells. The goal is to move cells from their initial (possibly overlapping) global placement positions to the nearest legal sites within the placement rows, ensuring no overlaps and satisfying row-based constraints.

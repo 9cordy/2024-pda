@@ -1,4 +1,4 @@
-# Corner Stitching - Physical Design Automation Lab 1
+# Corner Stitching
 
 ## Introduction
 This project implements the **Corner Stitching** data structure, a powerful technique used in VLSI layout tools for managing planar shapes and empty spaces. The implementation organizes space tiles as **maximal horizontal stripes**, ensuring no space tile has other space tiles immediately to its right or left.
