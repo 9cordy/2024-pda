@@ -13,7 +13,7 @@ This repository contains four algorithmic projects developed for the "Physical D
 
 ## Projects Overview
 
-### 1. [Corner Stitching Data Structure](./corner_stitching)
+### 1. [Corner Stitching](./corner_stitching)
 * **Description**: An implementation of the Corner Stitching data structure to manage planar shapes and empty spaces in layout environments.
 * **Implementation Details**:
   * Maintains the "maximal horizontal stripe" property for space tiles.
