@@ -34,7 +34,7 @@ This repository contains four algorithmic projects developed for the "Physical D
   * Validates insertion sites based on cell width and multiple-row constraints.
   * Incorporates a row compaction procedure to shift existing cells and resolve site unavailabilities.
 
-### 4. [Die-to-Die Global Router](./GlobalRouter)
+### 4. [Die-to-Die Global Router](./global_router)
 * **Description**: A grid-based global router specialized for Die-to-Die (D2D) connections across a two chips, managing routing capacities and directional layer constraints.
 * **Implementation Details**:
   * Discretizes the routing region into a 2D G-Cell grid and sorts nets based on Manhattan distance to manage congestion priority.
