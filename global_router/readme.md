@@ -1,32 +1,25 @@
-# Die-to-Die (D2D) Global Router
+# Die-to-Die Global Router
 
 ## Introduction
-This project implements a **Global Router** designed for **Die-to-Die (D2D)** connections, typically used in advanced packaging (e.g., CoWoS, MCM). The router connects pairs of bumps between two different chips (Chip 1 and Chip 2) across a Redistribution Layer (RDL) grid.
+This project implements a **Global Router** specialized for **Die-to-Die** connections. It efficiently connects bumps between two dies across a 2D grid while considering routing capacities and layer-specific costs.
 
-## Features
-* **A* Search Algorithm**: Utilizes a cost-driven A* search to find the optimal routing path for each net.
-* **Multi-Layer Routing**: Supports routing on two metal layers (Metal 1 for horizontal and Metal 2 for vertical routing).
-* **Capacity Management**: Dynamically tracks the routing capacity of each Grid Cell (G-Cell) to avoid congestion and overflow.
-* **Cost Optimization**: Minimizes a weighted cost function including wirelength, via counts, and congestion-based metal costs.
-
-## Technical Details
-### Routing Model
-* **Grid-Based**: The routing area is divided into a 2D grid of G-Cells.
-* **Layer Constraints**: 
-    * **Metal 1 (M1)**: Preferred for horizontal segments.
-    * **Metal 2 (M2)**: Preferred for vertical segments.
-* **Via Insertion**: Automatically inserts a via whenever the routing direction switches between horizontal and vertical.
-
-### Algorithm: A* Search
-The router explores the grid using the following cost function:
-$$f(n) = g(n) + h(n)$$
-* $g(n)$: The actual cost from the source bump to the current cell (includes wirelength and via costs).
-* $h(n)$: The heuristic Manhattan distance to the target bump.
+## Algorithm Flow
+* **Grid Construction**: Discretizes the routing region into a 2D G-Cell grid and initializes horizontal and vertical capacities for multiple layers.
+* **Net Sorting**: Orders the nets based on their Manhattan distance to prioritize shorter connections and manage congestion effectively.
+* **Path Finding (A* Search)**: 
+    * Utilizes the **A* Search algorithm** to find the optimal path with the lowest cost.
+    * Incorporates a cost function that balances wirelength, via counts, and congestion penalties.
+* **Backtracing**: Reconstructs the routing path from the target bump to the source once the A* search reaches the destination.
+* **Capacity Update**: Dynamically deducts the used routing resources from the G-Cell capacities to prevent overflow during subsequent net routing.
+* **Layer Assignment**: Assigns routing segments to Metal 1 (horizontal) or Metal 2 (vertical) and inserts vias at direction transition points.
 
 ## Compilation and Execution
 ```bash
-# To compile the program and generate the "D2DGRter" binary
+# To compile
 make
 
-# To execute the router
+# To execute
 ./D2DGRter <input.gmp> <input.gcl> <input.cst> <output.lg>
+
+# To remove object files
+make clean

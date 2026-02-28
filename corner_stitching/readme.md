@@ -1,27 +1,24 @@
 # Corner Stitching
 
 ## Introduction
-This project implements the **Corner Stitching** data structure, a powerful technique used in VLSI layout tools for managing planar shapes and empty spaces. The implementation organizes space tiles as **maximal horizontal stripes**, ensuring no space tile has other space tiles immediately to its right or left.
+This project implements the **Corner Stitching** data structure, a powerful technique for managing planar shapes and empty spaces in VLSI layout tools. The implementation ensures the **maximal horizontal stripe** property, where no space tile is adjacent to another space tile on its left or right sides.
 
-## Features
-* **Point Finding**: Efficiently locates the tile containing a specific (X, Y) coordinate by traversing tile pointers (rt, tr, bl, lb).
-* **Block Creating**: Supports dynamic insertion of rectangular blocks into the layout while maintaining the maximal horizontal stripe property.
-* **Neighbor Traversal**: Automatically identifies and counts adjacent solid blocks and blank tiles for any given tile.
-* **Tile Merging**: Includes logic to merge vertically adjacent blank tiles to keep the data structure optimized.
-
-## Data Structure Details
-The implementation uses a `class Tile` with the following pointers:
-* `rt` (right-top), `tr` (top-right)
-* `bl` (bottom-left), `lb` (left-bottom)
-* `type`: Distinguishes between **Blank (0)** and **Solid (1)** tiles.
+## Algorithm Flow
+* **Tile Initialization**: Creates an initial layout consisting of a single bounding box represented as a blank space tile.
+* **Point Finding**: Efficiently traverses the tile structure using four pointers (`rt`, `tr`, `bl`, `lb`) to locate the tile containing a specific coordinate.
+* **Block Insertion**: 
+    * Identifies all tiles overlapping with the new solid block area.
+    * Performs vertical and horizontal splitting of existing tiles to accommodate the new block.
+* **Space Tile Merging**: After insertion, vertically adjacent blank tiles are merged to maintain the maximal horizontal stripe property.
+* **Neighbor Traversal**: Dynamically identifies all solid and blank neighbors for a given tile by following the corner pointers.
 
 ## Compilation and Execution
 ```bash
-# To compile and generate the "corner_stitching" binary
+# To compile
 make
 
-# To execute the program with input and output files
+# To execute
 ./corner_stitching <input_file_name> <output_file_name>
 
-# To clean up object files and the binary
+# To remove object files
 make clean

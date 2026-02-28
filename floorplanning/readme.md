@@ -1,31 +1,27 @@
 # Fixed-Outline Floorplanning
 
 ## Introduction
-This project implements a fixed-outline floorplanner designed to place a set of rectangular hard macros within a specified chip boundary without any overlaps. The primary goal is to optimize a weighted cost function of the total chip area and the total wirelength (HPWL).
+This project implements a fixed-outline floorplanner designed to place rectangular hard macros within a specified boundary without overlaps. The tool optimizes a weighted cost function of total chip area and wirelength (HPWL) using a **B*-Tree** representation and **Simulated Annealing (SA)** optimization.
 
-## Methodology
-The floorplanner utilizes a **B*-Tree** representation to manage macro placements and **Simulated Annealing** for optimization.
-
-### Data Structures
-* **B*-Tree Representation**: Used to represent the topological relations between macros. Each node in the tree represents a macro, and the tree structure determines the relative $x$ and $y$ coordinates.
-* **Horizontal Contour Line**: A linked-list based contour structure is implemented to efficiently calculate the $y$-coordinates of macros during B*-Tree traversal, ensuring $O(n)$ placement complexity.
-
-### Optimization: Simulated Annealing (SA)
-To explore the solution space, the following operations are performed during the annealing process:
-1. **Macro Rotation**: Swapping the width and height of a macro.
-2. **Macro Move**: Moving a node to a different location within the B*-Tree.
-3. **Macro Swap**: Swapping the positions of two nodes in the tree.
-
-### Cost Function
-The cost is calculated as:
-$$Cost = \alpha \cdot \text{Area} + (1 - \alpha) \cdot \text{Wirelength (HPWL)}$$
-* **Area**: The area of the final bounding box of the floorplan.
-* **Wirelength**: Calculated using the **Half-Perimeter Wire Length (HPWL)** model based on the center points of the macros.
+## Algorithm Flow
+* **B*-Tree Representation**: Maps the topological relations between macros into a binary tree structure, where each node corresponds to a macro.
+* **Contour-based Placement**: Traverses the B*-Tree to determine macro coordinates ($x, y$) using a **Horizontal Contour Line**.
+* **Cost Evaluation**: 
+    * Calculates the total bounding box **Area** of the placement.
+    * Computes the **Total Wirelength** using the **Half-Perimeter Wire Length (HPWL)** model based on net connections.
+* **Simulated Annealing Optimization**: Iteratively perturbs the B*-Tree through three types of moves to find the optimal solution:
+    1. **Rotate**: Changes the orientation of a macro.
+    2. **Move**: Relocates a node to a different position in the tree.
+    3. **Swap**: Exchanges the positions of two nodes in the tree.
+* **Best State Recovery**: Tracks the solution with the minimum cost throughout the annealing process and restores it as the final output.
 
 ## Compilation and Execution
 ```bash
-# To compile the program and generate the "floorplanning" binary
+# To compile
 make
 
-# To execute the floorplanner
+# To execute
 ./floorplanning <alpha_value> <input.block> <input.net> <output>
+
+# To remove object files
+make clean

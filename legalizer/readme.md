@@ -1,29 +1,24 @@
 # Multi-Row Height Standard Cell Legalization
 
 ## Introduction
-This project implements a **Legalizer** for standard cell design, specifically handling **multi-row height** cells. The goal is to move cells from their initial (possibly overlapping) global placement positions to the nearest legal sites within the placement rows, ensuring no overlaps and satisfying row-based constraints.
+This project implements a **Legalizer** for standard cell placement, specifically designed to handle **multi-row height** cells. The tool eliminates overlaps by moving cells from their global placement positions to the nearest legal sites within the row structure while minimizing total displacement.
 
-## Methodology: Insert Cell Directly
-Based on the experimental results, this project focuses on the **Direct Insertion** approach for robust legalization.
-
-### Legalization Flow:
-1. **Initial Sorting**: Cells are sorted based on their initial $x$-coordinates to process them in a structured order.
-2. **Cell Removal**: Overlapping or illegal cells are temporarily removed from the layout to be re-inserted.
-3. **Optimal Position Search**: 
-    * For each cell, the algorithm identifies the best insertion row based on the $y$-distance from its target position.
-    * It searches for available sites in the current row and neighboring rows using a specific step size (e.g., 200 sites) to balance runtime and quality.
-4. **Site Validation**: Ensures that the selected site has enough contiguous free space to accommodate the cell's width and that it aligns with the site grid.
-5. **Compaction (Macro-level)**: If no legal site is found, a **Compaction** procedure is triggered. It sorts cells in a row by their $x$-coordinates and shifts them to reduce dead space, creating new vacancies for insertion.
-
-## Features
-* **Multi-row Support**: Correctly handles cells that span across multiple placement rows.
-* **Dead Space Optimization**: Uses compaction logic to handle high-density regions (e.g., in `testcase1_ALLO_5000`).
-* **Overlap Elimination**: Guaranteed overlap-free placement after the legalization process.
+## Algorithm Flow
+* **Initial Site Mapping**: Generates an initial placement grid and identifies available intervals across all placement rows.
+* **Cell Removal**: Temporarily removes banking cells or cells requiring legalization from the layout to re-evaluate the available space.
+* **Optimal Site Search**: 
+    * Searches for legal insertion sites in the target row and adjacent rows within a defined step range.
+    * Validates that the selected site can accommodate the cell's width and multiple-row height constraints.
+* **Direct Cell Insertion**: Places the cell into the identified optimal position and updates the occupancy status of the affected sites.
+* **Row Compaction**: If no legal site is found, a compaction procedure is triggered to shift existing cells and create contiguous free space for the new cell.
 
 ## Compilation and Execution
 ```bash
-# To compile the program and generate the "Legalizer" binary
+# To compile
 make
 
-# To execute the legalizer
+# To execute
 ./Legalizer <input.lg> <input.opt> <output.lg>
+
+# To remove object files
+make clean

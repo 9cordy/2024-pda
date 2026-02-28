@@ -1,48 +1,52 @@
-# 2024 Physical Design Automation Core Algorithms
+# 2024 Physical Design Automation (PDA)
 
-This repository contains four major projects developed during the "Physical Design Automation (PDA)" course in 2024. These projects cover the critical stages of the VLSI Physical Design flow, implemented entirely in C++ with a strong emphasis on performance optimization, advanced data structures, and algorithmic efficiency.
+This repository contains four algorithmic projects developed for the "Physical Design Automation" course in 2024. The implementations cover critical stages of the VLSI Physical Design flow, including data structure management, floorplanning, placement legalization, and global routing.
 
 ---
 
-## Tech Stack & Core Skills
-* **Programming Languages**: C++ (C++11 standard, heavy use of STL containers)
-* **Core Technologies**: Advanced Data Structures (B*-tree, Corner Stitching), Heuristic Algorithms, Memory Management
-* **Domain Knowledge**: VLSI Physical Design Flow, Floorplanning, Legalization, Global Routing
+## Tech Stack
+* **Language**: C / C++
+* **Algorithms**: Simulated Annealing (SA), A* Search Algorithm, Contour-based Placement
+* **Concepts**: B*-Tree, Corner Stitching, Half-Perimeter Wire Length (HPWL), Grid-based Routing (G-Cell)
 
 ---
 
 ## Projects Overview
 
-### 1. [Corner Stitching](./corner_stitching)
-* **Description**: Implemented the classic **Corner Stitching** data structure to dynamically manage 2D geometric layout information and empty space representations.
-* **Technical Highlights**: 
-  * Maintained space tiles as "maximal horizontal stripes" to ensure optimal layout querying.
-  * Engineered to handle massive block creation and point-finding operations while strictly passing a highly constrained 1-minute execution time limit.
+### 1. [Corner Stitching Data Structure](./corner_stitching)
+* **Description**: An implementation of the Corner Stitching data structure to manage planar shapes and empty spaces in layout environments.
+* **Implementation Details**:
+  * Maintains the "maximal horizontal stripe" property for space tiles.
+  * Executes coordinate point-finding via four-pointer traversal (`rt`, `tr`, `bl`, `lb`).
+  * Handles block insertion by performing vertical and horizontal tile splitting, followed by adjacent space tile merging.
 
-### 2. [Floorplanning](./floorplanning)
-* **Description**: Developed a floorplanner to determine the locations of hard macros while optimizing the total chip area and wirelength.
-* **Technical Highlights**: 
-  * Utilized the **B*-tree (B-star tree)** data structure to represent topological relations between modules.
-  * Implemented simulated annealing (or heuristic search) to explore the solution space, preventing module overlapping and minimizing dead space.
+### 2. [Fixed-Outline Floorplanning](./floorplanning)
+* **Description**: A floorplanner that places rectangular hard macros within a specified boundary to optimize total chip area and wirelength (HPWL).
+* **Implementation Details**:
+  * Utilizes a B*-Tree representation to map topological relations between macros.
+  * Determines macro coordinates using a Horizontal Contour Line.
+  * Applies Simulated Annealing (SA) with three perturbation moves: Rotate, Move, and Swap.
 
-### 3. [Standard Cell Legalization](./legalizer)
-* **Description**: Implemented a Legalizer to resolve overlapping standard cells generated after global placement, ensuring all cells are aligned to standard placement rows without violating design rules.
-* **Technical Highlights**: 
-  * Handled complex constraints including fixed cells (macros) and multi-row cells.
-  * Optimized the total displacement (Manhattan distance) of standard cells from their original global placement positions to maintain timing/wirelength integrity.
+### 3. [Multi-Row Height Legalization](./legalizer)
+* **Description**: A standard cell legalizer designed to eliminate overlaps and align cells to legal sites, with specific handling for multi-row height cells.
+* **Implementation Details**:
+  * Constructs an initial placement grid to map available intervals across placement rows.
+  * Validates insertion sites based on cell width and multiple-row constraints.
+  * Incorporates a row compaction procedure to shift existing cells and resolve site unavailabilities.
 
 ### 4. [Die-to-Die Global Router](./global_router)
-* **Description**: Developed a grid-based global routing algorithm for modern Die-to-Die (D2D) packaging architectures.
-* **Technical Highlights**: 
-  * Parsed complex netlists and grid graphs to construct routing paths.
-  * Balanced routing congestion and minimized total wirelength across multi-die layout boundaries.
+* **Description**: A grid-based global router specialized for Die-to-Die (D2D) connections, managing routing capacities and layer assignments.
+* **Implementation Details**:
+  * Sorts nets based on Manhattan distance and discretizes the routing region into a 2D G-Cell grid.
+  * Implements the A* Search algorithm to balance wirelength, via counts, and congestion penalties.
+  * Dynamically updates G-Cell capacities and assigns routing segments to specific metal layers (Metal 1/Metal 2).
 
 ---
 
-## How to Build and Run
-Each project directory contains a standalone `Makefile` and specific testcases. 
+## Compilation and Execution
+Each project is independently maintained with its own `Makefile`. 
 
-To compile and execute a project:
-1. Navigate to the desired project directory (e.g., `cd Legalizer`).
-2. Run `make` to compile the source code into an executable binary (using `-O3` optimization).
-3. Execute the binary with the required input/output arguments as specified in the local project instructions.
+To run a specific project:
+1. Navigate to the corresponding sub-directory.
+2. Run `make` to compile the executable.
+3. Follow the specific execution commands outlined in the local `readme.md` of each project.
