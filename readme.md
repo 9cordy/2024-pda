@@ -1,6 +1,6 @@
 # 2024 Physical Design Automation (PDA)
 
-This repository contains four algorithmic projects developed for the "Physical Design Automation" course in 2024. The implementations cover critical stages of the VLSI Physical Design flow, including data structure management, floorplanning, placement legalization, and global routing.
+This repository contains four algorithmic projects implemented for the "Physical Design Automation" course in 2024. The implementations cover critical stages of the VLSI Physical Design flow, including data structure management, floorplanning, placement legalization, and global routing.
 
 ---
 
